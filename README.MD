@@ -1,11 +1,36 @@
+# VOMU Backend Service
 
-## Migrations
+Description needed.
 
-// To run migrations.
-npm run migrate
+## 1. Simple To Use and Contribute
 
-// To rollback migrations. 
-npm run migrate_rollback
+Before starting, please make sure you have the following installed:
 
-// To create a new migration.
-migrate-mongo create migration_name
+-   ```npm```
+-   ```mongodb```
+-   ```node```
+
+If not, please look at the following resources in order to get the above:
+
+-   
+
+### Install Packages
+
+```npm install```
+
+### Migrate and Seed Local Mongodb.
+
+```npm run migrate```
+
+#### Rollback Migration
+
+```npm run migrate_rollback```
+
+#### Create New Migration
+
+```migrate-mongo create migration_name```
+
+
+### Run Service!
+
+```npm run serve```
