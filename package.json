@@ -7,7 +7,9 @@
     "watch": "babel -w src/ -d dist/",
     "build": "babel src/ -d dist/",
     "serve": "babel -w src/ -d dist/ | nodemon --watch dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "migrate-mongo up",
+    "migrate_rollback": "migrate-mongo down"
   },
   "repository": {
     "type": "git",
@@ -26,7 +28,7 @@
     "babel-node": "0.0.1-security",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "mongo-seeding": "^3.4.1",
+    "migrate-mongo": "^7.2.1",
     "mongoose": "^5.9.16",
     "morgan": "^1.10.0"
   },
