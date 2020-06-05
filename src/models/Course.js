@@ -1,22 +1,19 @@
 import mongoose from 'mongoose';
 
+import { defaultErrorHandler } from '../middlewares/mongoErrorHandler';
+import SubjectSchema from './Subject';
+
 const Schema = mongoose.Schema;
 
-const SubjectSchema = new Schema({
-    id: Number,
-  	title: String,
-  	description: String,
-  	videoURL: String, 
-});
-
 const CourseSchema = new Schema({
-  	id: Number,
   	title: String,
   	description: String,
   	imgURL: String,
   	subjects: [SubjectSchema],
-  	students: [Number],
-  	professor: Number,
+  	students: [String],
+  	professor: String,
 });
+
+CourseSchema.pre('save', defaultErrorHandler);
 
 export default CourseSchema;

@@ -1,8 +1,10 @@
+const ObjectId = require('bson').ObjectId;
+
 module.exports = {
   async up(db) {
     await db.collection('users').insertMany([
   		{
-  			id: 0,
+  			 _id: new ObjectId("5ed9ba30524b7a5ebefe9f3e"),
   			email: 'user@gmail.com',
   			name: 'Iris',
   			last: 'Craft',
@@ -14,7 +16,7 @@ module.exports = {
   			followup: [{ course_id: 1, subject_id: 2 }, {course_id: 5, subject_id: 2}]
   		},
   		{
-  			id: 1,
+  			 _id: new ObjectId("5ed9ba30524b7a5ebefe9f3f"),
   			email: 'risus@urnaVivamusmolestie.org',
   			name: 'Gareth',
   			last: 'Monroe',
@@ -22,11 +24,11 @@ module.exports = {
   			type: 'professor',
   			description: 'vel, faucibus id, libero. Donec consectetuer mauris id sapien. Cras',
   			image: 'https://source.unsplash.com/collection/190727/400x400',
-  			courses: [1],
+  			courses: ["5ed9ba30524b7a5ebefe9f49"],
   			title: 'PhD'
   		},
   		{
-  			id: 2,
+  			 _id: new ObjectId("5ed9ba30524b7a5ebefe9f40"),
   			email: 'egestas.nunc@bibendum.org',
   			name: 'Violet',
   			last: 'Reese',
@@ -34,11 +36,11 @@ module.exports = {
   			type: 'professor',
   			description: 'felis. Nulla tempor augue ac ipsum. Phasellus vitae mauris sit',
   			image: 'https://source.unsplash.com/collection/190727/400x400',
-  			courses: [2],
+  			courses: ["5ed9ba30524b7a5ebefe9f4a"],
   			title: 'PsyD'
   		},
   		{
-  			id: 3,
+  			 _id: new ObjectId("5ed9ba30524b7a5ebefe9f41"),
   			email: 'sapien.Nunc.pulvinar@estac.co.uk',
   			name: 'Cade',
   			last: 'Watkins',
@@ -46,11 +48,11 @@ module.exports = {
   			type: 'professor',
   			description: 'luctus sit amet, faucibus ut, nulla. Cras eu tellus eu',
   			image: 'https://source.unsplash.com/collection/190727/400x400',
-  			courses: [3],
+  			courses: ["5ed9ba30524b7a5ebefe9f4b"],
   			title: 'EdD'
   		},
   		{
-  			id: 4,
+  			 _id: new ObjectId("5ed9ba30524b7a5ebefe9f42"),
   			email: 'facilisis@laoreetlibero.edu',
   			name: 'Ferris',
   			last: 'Jarvis',
@@ -62,7 +64,7 @@ module.exports = {
   			followup: [{ course_id: 1, subject_id: 3 }, { course_id: 2, subject_id: 1 }, { course_id: 5, subject_id: 2 } ]
   		},
   		{
-  			id: 5,
+  			 _id: new ObjectId("5ed9ba30524b7a5ebefe9f43"),
   			email: 'malesuada@Praesenteunulla.edu',
   			name: 'Karly',
   			last: 'Wilder',
@@ -70,11 +72,11 @@ module.exports = {
   			type: 'professor',
   			description: 'Fusce mi lorem, vehicula et, rutrum eu, ultrices sit amet',
   			image: 'https://source.unsplash.com/collection/190727/400x400',
-  			courses: [4],
+  			courses: ["5ed9ba30524b7a5ebefe9f4c"],
   			title: 'PhD'
   		},
   		{
-  			id: 6,
+  			 _id: new ObjectId("5ed9ba30524b7a5ebefe9f44"),
   			email: 'tincidunt@tellusPhasellus.net',
   			name: 'Hermione',
   			last: 'Roman',
@@ -82,11 +84,11 @@ module.exports = {
   			type: 'professor',
   			description: 'leo. Vivamus nibh dolor, nonummy ac, feugiat non, lobortis quis,',
   			image: 'https://source.unsplash.com/collection/190727/400x400',
-  			courses: [5],
+  			courses: ["5ed9ba30524b7a5ebefe9f4d"],
   			title: 'EdD'
   		},
   		{
-  			id: 7,
+  			 _id: new ObjectId("5ed9ba30524b7a5ebefe9f45"),
   			email: 'Cras.vehicula@velitAliquamnisl.edu',
   			name: 'Mary',
   			last: 'Hampton',
@@ -98,7 +100,7 @@ module.exports = {
   			followup: [{ course_id: 3, subject_id: 2 }, { course_id: 4, subject_id: 1 }, { course_id: 5, subject_id: 1 }]
   		},
   		{
-  			id: 8,
+  			 _id: new ObjectId("5ed9ba30524b7a5ebefe9f46"),
   			email: 'faucibus.leo@musAeneaneget.co.uk',
   			name: 'Omar',
   			last: 'Benton',
@@ -110,7 +112,7 @@ module.exports = {
   			followup: [{ course_id: 3, subject_id: 1 }]
   		},
   		{
-  			id: 9,
+  			 _id: new ObjectId("5ed9ba30524b7a5ebefe9f47"),
   			email: 'Vivamus@blanditatnisi.co.uk',
   			name: 'Yolanda',
   			last: 'Cabrera',
@@ -125,8 +127,19 @@ module.exports = {
   },
 
   async down(db) {
-    var ids = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    await db.collection('users').deleteMany({ id: { $in: ids }}, (err, obj) => {
+    var ids = [
+		new ObjectId("5ed9ba30524b7a5ebefe9f3e"),
+		new ObjectId("5ed9ba30524b7a5ebefe9f3f"),
+		new ObjectId("5ed9ba30524b7a5ebefe9f40"),
+		new ObjectId("5ed9ba30524b7a5ebefe9f41"),
+		new ObjectId("5ed9ba30524b7a5ebefe9f42"),
+		new ObjectId("5ed9ba30524b7a5ebefe9f43"),
+		new ObjectId("5ed9ba30524b7a5ebefe9f44"),
+		new ObjectId("5ed9ba30524b7a5ebefe9f45"),
+		new ObjectId("5ed9ba30524b7a5ebefe9f46"),
+		new ObjectId("5ed9ba30524b7a5ebefe9f47"),
+	];
+    await db.collection('users').deleteMany({ _id: { $in: ids }}, (err, obj) => {
       if(err)
         throw err;
     });

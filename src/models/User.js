@@ -1,4 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, { get } from 'mongoose';
+
+import { defaultErrorHandler, resourceHandler } from '../middlewares/mongoErrorHandler';
 
 const Schema = mongoose.Schema;
 
@@ -8,7 +10,6 @@ const FollowUps = new Schema({
 });
 
 const UserSchema = new Schema({
-  	id: Number,
   	email: String,
   	name: String,
   	last: String,
@@ -19,5 +20,12 @@ const UserSchema = new Schema({
   	image: String,
   	followup: [FollowUps],
 });
+
+// Set handler for methods to use with mongoose.
+UserSchema.post('save', defaultErrorHandler);
+UserSchema.post('deleteOne', defaultErrorHandler);
+UserSchema.post('deleteOne', resourceHandler);
+UserSchema.post('findOne', defaultErrorHandler);
+UserSchema.post('findOne', resourceHandler);
 
 export default UserSchema;
