@@ -25,13 +25,15 @@ router.post('/', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     try {
-        const courses = await Course.find().populate({
-            path: 'students',
-            populate: {
+        const courses = await Course.find()
+            .populate({
                 path: 'subjects',
-                model: 'Subject'
-            }
-        }).exec();
+                model: 'Subject',
+            })
+            .populate({
+                path: 'students',
+                model: 'User',
+            });
         res.status(200).json(courses);
     } catch(err) {
         next(err);

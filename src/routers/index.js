@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 import express from 'express';
 
 import courses from './courses';
@@ -13,4 +11,3 @@ router.use('/courses', courses);
 router.use('/subjects', subjects);
 
 export default router;
->>>>>>> Stashed changes

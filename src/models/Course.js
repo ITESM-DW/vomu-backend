@@ -9,9 +9,15 @@ const CourseSchema = new Schema({
   	title: String,
   	description: String,
   	imgURL: String,
-  	subjects: [SubjectSchema],
-  	students: [String],
-  	professor: String,
+  	subjects: [{ 
+		  type: mongoose.Types.ObjectId,
+		  ref: 'Subject',
+	  }],
+  	students: [{
+		  type: mongoose.Types.ObjectId,
+		  ref: 'User',
+	  }],
+  	professor: { type: mongoose.Types.ObjectId, ref: 'User' },
 });
 
 CourseSchema.pre('save', defaultErrorHandler);
