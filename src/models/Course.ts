@@ -1,18 +1,20 @@
 import mongoose from 'mongoose';
 
 import { defaultErrorHandler } from '../middlewares/mongoErrorHandler';
-import SubjectSchema from './Subject';
 
 const Schema = mongoose.Schema;
+
+const SubjectSchema = new Schema({
+	title: String,
+	description: String,
+	videoURL: String,
+});
 
 const CourseSchema = new Schema({
   	title: String,
   	description: String,
   	imgURL: String,
-  	subjects: [{ 
-		  type: mongoose.Types.ObjectId,
-		  ref: 'Subject',
-	  }],
+  	subjects: [SubjectSchema],
   	students: [{
 		  type: mongoose.Types.ObjectId,
 		  ref: 'User',
@@ -20,6 +22,6 @@ const CourseSchema = new Schema({
   	professor: { type: mongoose.Types.ObjectId, ref: 'User' },
 });
 
-CourseSchema.pre('save', defaultErrorHandler);
+CourseSchema.post('save', defaultErrorHandler );
 
-export default CourseSchema;
+export const Course = mongoose.model('Course', CourseSchema);
