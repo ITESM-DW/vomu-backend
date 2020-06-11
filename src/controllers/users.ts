@@ -4,10 +4,10 @@ import jwt from 'jsonwebtoken';
 
 import '../config/passport';
 import { User, UserDocument } from '../models/User';
-import { userValidator, mongoIdValidator } from '../utils/validators';
+import { userValidator, mongoIdValidator, userUpdateValidator } from '../utils/validators';
 import validate from '../utils/validate';
 import { AUTH_SECRET } from '../config/secrets';
-import { BadRequestError, AuthenticationError } from '../utils/errors';
+import { BadRequestError } from '../utils/errors';
 
 const controller = {
 	logIn: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -20,7 +20,9 @@ const controller = {
 					if (err) {
 						return next(err);
 					}
-					const token = jwt.sign(user._doc, AUTH_SECRET);
+					const token = jwt.sign(user._doc, AUTH_SECRET, {
+						expiresIn: '1h'
+					});
 					return res.json({ token });
 				});
 			})(req, res, next);
@@ -63,6 +65,18 @@ const controller = {
 			res.status(200).json(await user.getUserProfile());
 		} catch (err) {
 			next(err);
+		}
+	},
+	updateUser: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		const user = req.user as UserDocument;
+
+		try {
+			const userDetail = await validate(userUpdateValidator, req.body);
+			await User.updateOne({ _id: user._id }, userDetail);
+
+			res.send(userDetail);
+		} catch (error) {
+			next(error);
 		}
 	},
 	deleteUser: async (req: Request, res: Response, next: NextFunction): Promise<void> => {

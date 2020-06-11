@@ -22,10 +22,15 @@ router.post('/signup', userController.signUp);
 //TODO Add isAuthorized	for admin
 router.get('/', userController.getUsers);
 /*
-	GET /api/users/:id
-	Get a single user by id
+	GET /api/users/
+	Get a current user
 */
 router.get('/profile', passport.authenticate('jwt', { session: false }), userController.getUser);
+/*
+	POST /api/users/update
+	Delete a user by id
+*/
+router.post('/update', passport.authenticate('jwt', { session: false }), userController.updateUser);
 /*
 	DELETE /api/users/:id
 	Delete a user by id

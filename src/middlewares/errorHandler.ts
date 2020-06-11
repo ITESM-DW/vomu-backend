@@ -6,7 +6,7 @@ import { Request, Response, NextFunction } from 'express';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default (err: Error, req: Request, res: Response, next: NextFunction) => {
 	if(err) {
-		if (err instanceof BadRequestError) {
+		if (err instanceof BadRequestError || err instanceof ValidationError) {
 			res.status(400).send({
 				status: 400,
 				message: err.message
@@ -20,11 +20,6 @@ export default (err: Error, req: Request, res: Response, next: NextFunction) => 
 			res.status(403).send({
 				status: 403,
 				message: err.message
-			});
-		} else if (err instanceof ValidationError) {
-			res.status(404).send({
-				status: 404,
-				message: err.message,
 			});
 		} else if (err instanceof ResourceNotFoundError) {
 			res.status(404).send({

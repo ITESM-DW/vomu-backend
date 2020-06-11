@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import * as yup from 'yup';
+import { UserRoles } from '../models/User';
 
 // import { USER_TYPE } from '../constants';
 
@@ -14,11 +15,19 @@ export const userValidator = {
 	name: yup.string().required(),
 	last: yup.string().required(),
 	password: yup.string().required(),
-	type: yup.string().oneOf(['student', 'professor']).required(),
-	title: yup.string().required(),
-	description: yup.string().required(),
+	type: yup.string().oneOf([UserRoles.STUDENT, UserRoles.PROFESSOR]),
+	title: yup.string(),
+	description: yup.string(),
 	image: yup.string().required(),
-	followup: yup.array().required()
+};
+
+export const userUpdateValidator = {
+	email: yup.string().required(),
+	name: yup.string().required(),
+	last: yup.string().required(),
+	title: yup.string(),
+	description: yup.string(),
+	image: yup.string().required(),
 };
 
 export const subjectValidator = {
