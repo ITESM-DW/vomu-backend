@@ -13,10 +13,11 @@ const controller = {
 			if (user.type === UserRoles.PROFESSOR) {
 				// Validate schema.
 				const courseDetail = await validate(courseValidator, req.body);
-	
+
 				// Create and save new course. 
 				const course = new Course({ ...courseDetail, students: [], professor: user._id });
 				await course.save();
+				res.status(200).json(course);
 			} else {
 				next(new AuthorizationError('User is not authorized for course creation'));
 			}

@@ -1,5 +1,4 @@
 import express from 'express';
-import * as yup from 'yup';
 
 import userController from '../controllers/users';
 import passport from 'passport';
