@@ -1,13 +1,13 @@
 import express from 'express';
+import passport from 'passport';
 
 import courses from './courses';
-import subjects from './subjects';
 import users from './users';
+import '../config/passport';
 
 const router = express.Router();
 
 router.use('/users', users);
-router.use('/courses', courses);
-router.use('/subjects', subjects);
+router.use('/courses', passport.authenticate('jwt', { session: false }), courses);
 
 export default router;
