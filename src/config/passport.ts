@@ -2,10 +2,11 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JWTStrategy } from 'passport-jwt';
 import { ExtractJwt } from 'passport-jwt';
+import { Request, Response, NextFunction } from 'express';
 
-import { User, UserDocument } from '../models/User';
+import { User, UserDocument, UserRoles } from '../models/User';
 import { AUTH_SECRET } from './secrets';
-import { AuthenticationError } from '../utils/errors';
+import { AuthenticationError, AuthorizationError } from '../utils/errors';
 
 passport.serializeUser<any, any>((user, done) => {
 	done(undefined, user.id);
@@ -55,3 +56,12 @@ passport.use(new JWTStrategy({
 		return done(err, false);
 	}
 }));
+
+export const isProfessor = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+	const user = req.user as UserDocument;
+	if (user.type === UserRoles.PROFESSOR) {
+		next();
+	} else {
+		next(new AuthorizationError('User is not authorized for course creation'));
+	}
+};

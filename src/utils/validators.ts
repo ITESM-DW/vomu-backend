@@ -7,7 +7,7 @@ import { UserRoles } from '../models/User';
 export const mongoIdValidator = yup.string().test(
 	'isMongoId',
 	'Id is not a valid MongoDB id',
-	value => !mongoose.isValidObjectId(value)
+	value => mongoose.isValidObjectId(value)
 );
 
 export const userValidator = {
@@ -37,6 +37,14 @@ export const subjectValidator = {
 };
 
 export const courseValidator = {
+	title: yup.string().required(),
+	description: yup.string().required(),
+	imgURL: yup.string().url(),
+	subjects: yup.array().of(yup.object().shape(subjectValidator))
+};
+
+export const courseUpdateValidator = {
+	_id: yup.string().required(),
 	title: yup.string().required(),
 	description: yup.string().required(),
 	imgURL: yup.string().url(),
