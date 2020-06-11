@@ -16,10 +16,13 @@ export const defaultErrorHandler = function (error: MongoError, doc: Document, n
 
 export const resourceHandler = function (doc: any, next: (err?: NativeError) => void): void {
 	// Emtpy response.
-	if(!doc || !doc.nModified) {
+	if(!doc) {
 		throw new ResourceNotFoundError('Could not find the resource asked for');
 	}
 	if(doc && doc.deletedCount === 0) {
+		throw new ResourceNotFoundError('Could not delete the resource asked for');
+	}
+	if (doc && doc.nModified === 0) {
 		throw new ResourceNotFoundError('Could not delete the resource asked for');
 	}
 	next();
