@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 import setTimeout from 'connect-timeout';
 import passport from 'passport';
+import cors from 'cors';
 
 import errorHandler from './middlewares/errorHandler';
 import routers from './routers';
@@ -17,6 +18,7 @@ import { PORT, MONGO_URI, MONGO_DB_NAME } from './config/secrets';
 	app.use(passport.initialize());
 	app.use(express.urlencoded({ extended: true }));
 	app.use(express.json());
+	app.use(cors());
 	app.use(setTimeout('5s'));
 
 	// API routes.
