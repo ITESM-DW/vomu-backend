@@ -7,7 +7,7 @@ import { User, UserDocument } from '../models/User';
 import { userValidator, mongoIdValidator } from '../utils/validators';
 import validate from '../utils/validate';
 import { AUTH_SECRET } from '../config/secrets';
-import { BadRequestError } from '../utils/errors';
+import { BadRequestError, AuthenticationError } from '../utils/errors';
 
 const controller = {
 	logIn: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -73,6 +73,19 @@ const controller = {
 			res.status(200).json(user);
 		} catch (err) {
 			next(err);
+		}
+	},
+	isAuth: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		try {
+			passport.authenticate('jwt', { session: false }, (err, user) => {
+				if (err) {
+					res.status(401).json({ status: 200, message: false });
+				} else {
+					res.send({ status: 200, message: true });
+				}
+			})(req, res, next);
+		} catch (error) {
+			next(error);	
 		}
 	}
 };
