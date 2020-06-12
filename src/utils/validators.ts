@@ -31,9 +31,10 @@ export const userUpdateValidator = {
 };
 
 export const subjectValidator = {
+	_id: yup.string(),
 	title: yup.string().required(),
 	description: yup.string().required(),
-	videoURL: yup.string().url()
+	videoURL: yup.string()
 };
 
 export const courseValidator = {
