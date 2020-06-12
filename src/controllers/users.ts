@@ -92,7 +92,8 @@ const controller = {
 
 		try {
 			const userDetail = await validate(userUpdateValidator, req.body) as UserDocument;
-			await User.updateOne({ _id: user._id }, userDetail);
+			const { password, ...userDetailWOPassword } = userDetail;
+			await User.updateOne({ _id: user._id }, userDetailWOPassword);
 
 			res.send(translateUser(userDetail, req.get('lang')));
 		} catch (error) {
