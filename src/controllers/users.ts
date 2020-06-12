@@ -8,6 +8,7 @@ import { userValidator, mongoIdValidator, userUpdateValidator } from '../utils/v
 import validate from '../utils/validate';
 import { AUTH_SECRET } from '../config/secrets';
 import { BadRequestError } from '../utils/errors';
+import { translateUser, translateUsers, translateGeneric } from '../utils/translateModel';
 
 const controller = {
 	logIn: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -41,19 +42,19 @@ const controller = {
 			const userDetail = await validate(userValidator, req.body);
 
 			// Create and save new user. 
-			const user = new User(userDetail);
+			const user = new User(userDetail) as UserDocument;
 			await user.save();
 
 			// Return user.
-			res.json(user);
+			res.json(translateUser(user, req.get('lang')));
 		} catch (err) {
 			next(err);
 		}
 	},
 	getUsers: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		try {
-			const user = await User.find().select('email name last password type title description image');
-			res.status(200).json(user);
+			const user = await User.find().select('email name last password type title description image') as UserDocument[];
+			res.status(200).json(translateUsers(user, req.get('lang')));
 		} catch (err) {
 			next(err);
 		}
@@ -62,7 +63,7 @@ const controller = {
 		try {
 			const user = req.user as UserDocument;
 
-			res.status(200).json(await user.getUserProfile());
+			res.status(200).json(translateUser((await user.getUserProfile())[0], req.get('lang')));
 		} catch (err) {
 			next(err);
 		}
@@ -71,20 +72,24 @@ const controller = {
 		const user = req.user as UserDocument;
 
 		try {
-			const userDetail = await validate(userUpdateValidator, req.body);
+			const userDetail = await validate(userUpdateValidator, req.body) as UserDocument;
 			await User.updateOne({ _id: user._id }, userDetail);
 
-			res.send(userDetail);
+			res.send(translateUser(userDetail, req.get('lang')));
 		} catch (error) {
 			next(error);
 		}
 	},
 	deleteUser: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		try {
-			const deleteId = await validate({ id: mongoIdValidator.required() }, req.params);
-			const user = await User.deleteOne(deleteId);
+			const {_id } = await validate({ _id: mongoIdValidator.required() }, req.params) as any;
+			const dbResponse = await User.deleteOne(_id);
 
-			res.status(200).json(user);
+			res.status(200).json(translateGeneric({
+				status: 200,
+				message: 'Deleted User',
+				dbResponse,
+			}, req.get('lang')));
 		} catch (err) {
 			next(err);
 		}

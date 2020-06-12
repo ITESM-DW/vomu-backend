@@ -11,7 +11,7 @@ type SubjectDocument = Document & {
 	videoURL: string;
 };
 
-type CourseDocument = Document & {
+export type CourseDocument = Document & {
 	title: string;
 	description: string;
 	imgURL: string;

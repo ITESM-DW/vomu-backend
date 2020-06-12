@@ -62,6 +62,6 @@ export const isProfessor = async (req: Request, res: Response, next: NextFunctio
 	if (user.type === UserRoles.PROFESSOR) {
 		next();
 	} else {
-		next(new AuthorizationError('User is not authorized for course creation'));
+		next(new AuthorizationError('User is not authorized for course modification'));
 	}
 };

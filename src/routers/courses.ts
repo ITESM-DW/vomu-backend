@@ -23,11 +23,11 @@ router.post('/update', passport.authenticate('jwt', { session: false }), isProfe
 	GET /api/courses/:id
 	
 */
-router.get('/:id', coursesController.getCourse);
+router.get('/:_id', coursesController.getCourse);
 /*
 	DELETE /api/courses/:id
 	
 */
-router.delete('/:id', passport.authenticate('jwt', { session: false }), isProfessor, coursesController.deleteCourse);
+router.delete('/:_id', passport.authenticate('jwt', { session: false }), isProfessor, coursesController.deleteCourse);
 
 export default router;
