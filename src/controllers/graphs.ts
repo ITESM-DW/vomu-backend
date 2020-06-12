@@ -171,7 +171,6 @@ const controller = {
 						}
 					},
 					{
-						datasets: [],
 						labels: [
 							'Technology',
 							'Self Improvement',
