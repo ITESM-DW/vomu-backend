@@ -13,7 +13,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), isProfessor, 
 	GET /api/courses/
 	
 */
-router.get('/', passport.authenticate('jwt', { session: false }), coursesController.getCourses);
+router.get('/', coursesController.getCourses);
 /*
 	POST /api/courses/update
 	Update course sending id in body

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { Course } from '../models/Course';
+import { Course, CourseDocument } from '../models/Course';
 import { UserDocument } from '../models/User';
 import { mongoIdValidator, courseValidator, courseUpdateValidator } from '../utils/validators';
 import validate from '../utils/validate';
@@ -24,8 +24,7 @@ const controller = {
 	},
 	getCourses: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		try {
-			const user = req.user as UserDocument;
-			const courses = await user.getUserCourses();
+			const courses = await Course.find() as CourseDocument[];
 			res.status(200).json(translateCourses(courses, req.get('lang')));
 		} catch (err) {
 			next(err);

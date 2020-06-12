@@ -88,9 +88,8 @@ const getUserCourses: getUserCoursesFunction = async function (this: UserDocumen
 			description: 1,
 			imgURL: 1,
 			subjects: 1,
-			students: {
-				$size: '$students'
-			}
+			students: 1,
+			professor: 1,
 		});
 };
 
@@ -100,13 +99,15 @@ const getUserProfile: getUserProfileFunction = async function(this: UserDocument
 			_id: this._id
 		})
 		.project({
-			_id: 0,
+			_id: 1,
 			email: 1,
 			name: 1,
 			last: 1,
 			title: 1,
 			description: 1,
-			image: 1
+			image: 1,
+			type: 1,
+			followup: 1,
 		});
 };
 

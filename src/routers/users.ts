@@ -21,13 +21,23 @@ router.post('/signup', userController.signUp);
 //TODO Add isAuthorized	for admin
 router.get('/', userController.getUsers);
 /*
-	GET /api/users/
+	GET /api/users/profile
 	Get a current user
 */
-router.get('/profile', passport.authenticate('jwt', { session: false }), userController.getUser);
+router.get('/profile', passport.authenticate('jwt', { session: false }), userController.getProfile);
+/*
+	GET /api/users/_id
+	Get a current user
+*/
+router.get('/:_id', userController.getUser);
+/*
+	GET /api/users/_id/courses
+	Get a user courses
+*/
+router.get('/:_id/courses', userController.getUserCourses);
 /*
 	POST /api/users/update
-	Delete a user by id
+	Update a user by id
 */
 router.post('/update', passport.authenticate('jwt', { session: false }), userController.updateUser);
 /*
@@ -35,9 +45,7 @@ router.post('/update', passport.authenticate('jwt', { session: false }), userCon
 	Delete a user by id
 */
 router.delete('/', passport.authenticate('jwt', { session: false }), userController.deleteUser);
-/*
-	DELETE /api/users/:id
-	Delete a user by id
-*/
+
+
 router.get('/auth', userController.isAuth);
 export default router;

@@ -8,7 +8,7 @@ import { userValidator, mongoIdValidator, userUpdateValidator } from '../utils/v
 import validate from '../utils/validate';
 import { AUTH_SECRET } from '../config/secrets';
 import { BadRequestError } from '../utils/errors';
-import { translateUser, translateUsers, translateGeneric } from '../utils/translateModel';
+import { translateUser, translateUsers, translateCourses, translateGeneric } from '../utils/translateModel';
 
 const controller = {
 	logIn: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -51,6 +51,25 @@ const controller = {
 			next(err);
 		}
 	},
+	getUser: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		try {
+			const userId = await validate({ _id: mongoIdValidator.required()}, req.params) as any;
+			const user = await User.findOne(userId) as UserDocument;
+			res.status(200).json(translateUser(user, req.get('lang')));
+		} catch (err) {
+			next(err);
+		}
+	},
+	getUserCourses: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+		try {
+			const userId = await validate({ _id: mongoIdValidator.required()}, req.params) as any;
+			const user = await User.findOne(userId) as UserDocument;
+			const courses = await user.getUserCourses();
+			res.status(200).json(translateCourses(courses, req.get('lang')));
+		} catch (err) {
+			next(err);
+		}
+	},
 	getUsers: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		try {
 			const user = await User.find().select('email name last password type title description image') as UserDocument[];
@@ -59,7 +78,7 @@ const controller = {
 			next(err);
 		}
 	},
-	getUser: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+	getProfile: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 		try {
 			const user = req.user as UserDocument;
 

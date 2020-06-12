@@ -63,9 +63,11 @@ const getCourse: getCourseFunction = async (id: string) => {
 			description: 1,
 			imgURL: 1,
 			subjects: 1,
-			students: {
-				$size: '$students'
-			}
+			students: 1,
+			professor: 1,
+			// students: {
+			// 	$size: '$students'
+			// }
 		});
 
 	return course[0];
