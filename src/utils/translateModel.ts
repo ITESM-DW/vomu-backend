@@ -1,5 +1,5 @@
-import { UserDocument } from 'src/models/User';
-import { CourseDocument } from 'src/models/Course';
+import { UserDocument } from '../models/User';
+import { CourseDocument } from '../models/Course';
 
 const enum SUPPORTED_LANGUAGES {
     ENGLISH = 'en',

@@ -4,6 +4,8 @@ import userController from '../controllers/users';
 import passport from 'passport';
 
 const router = express.Router();
+
+router.get('/auth', userController.isAuth);
 /*
 	POST /api/users/login
 	Log in to account
@@ -19,7 +21,7 @@ router.post('/signup', userController.signUp);
 	Get all users
 */
 //TODO Add isAuthorized	for admin
-router.get('/', userController.getUsers);
+// router.get('/', userController.getUsers);
 /*
 	GET /api/users/profile
 	Get a current user
@@ -46,6 +48,4 @@ router.post('/update', passport.authenticate('jwt', { session: false }), userCon
 */
 router.delete('/', passport.authenticate('jwt', { session: false }), userController.deleteUser);
 
-
-router.get('/auth', userController.isAuth);
 export default router;
